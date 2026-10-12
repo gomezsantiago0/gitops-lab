@@ -2,4 +2,10 @@ framework:
   - terraform
 compact: true
 quiet: true
-skip-check: []
+skip-check:
+  - CKV_AZURE_59    # El sitio web estático tiene que ser público para que se pueda abrir desde internet. Si se cierra el acceso público, la página queda sin servicio.
+  - CKV2_AZURE_33   # Un endpoint privado haría que el sitio solo se viera desde una red privada y tiene costo extra. En este laboratorio el sitio es público a propósito.
+  - CKV2_AZURE_1    # Pide crear un Key Vault y manejar claves propias. Azure ya cifra los datos con claves de Microsoft y la página no tiene datos sensibles.
+  - CKV_AZURE_206   # Para un laboratorio alcanza con LRS. Más replicación sube el costo y el contenido se puede recrear desde Git en cualquier momento.
+  - CKV_AZURE_33    # La cuenta no usa el servicio de colas, así que no hay solicitudes que registrar.
+  - CKV2_AZURE_40   # Terraform sube index.html con la clave de la cuenta. Quitarla exige usar Entra ID y darle a la identidad un permiso extra (ver Pregunta 5).
